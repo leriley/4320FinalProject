@@ -1,0 +1,16 @@
+<!-- This page contains structural data common to all pages -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <a href="{{ url_for('reserve') }}">Reservations</a>
+    </nav>
+    <hr style="width:90%"> 
+</body>
+</html>
