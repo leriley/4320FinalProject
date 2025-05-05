@@ -6,6 +6,19 @@ app = Flask(__name__)
 #Index page view/route
 #'app' on these routes will need to be updated when the database is set up so the blueprints can be incorperated
 #from @app.route to @[blueprint_name].bp.route
+
+@app.route('/dashboard_redirect', methods=['POST'])
+def dashboard_redirect():
+    option = request.form.get('option')
+    if not option:
+        return redirect(url_for('index'))
+        
+    if option == 'admin':
+        return redirect(url_for('admin'))
+    elif option == 'reserve':
+        return redirect(url_for('reserve'))
+    return redirect(url_for('index'))
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')

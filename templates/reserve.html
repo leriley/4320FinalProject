@@ -3,5 +3,43 @@
 {% block title %} Reservations {% endblock%}
 
 {% block content %}
+<div>
+    <h1 class="title has-text-centered">Reserve Your Seat</h1>
+    <hr class="custom-hr">
+    
+    {% if code %}
+        <p>Congratulations your seat is now reserved for you. Enjoyy your trip!</p>
+        <p>Your eticket number is: </p>
+    {% endif %}
+    
+    <h3 class="subtitle has-text-centered"><strong>Seating Chart</strong></h3>
+    <p><strong>X = Reserved Seat : O = Available Seat</strong></p><br>
+    
+    <div class="custom-chart">
+<!--
+<strong>This is where the seating chart will be printed
+</strong>
+-->
+    </div>
+        
+    <form method="post">
+        <label>First Name</label><br>
+        <input type="text" name="first_name" required><br>
+        <label>Last Name</label><br>
+        <input type="text" name="last_name" required><br>
+        
+        <label>Choose a Row:</label><br>
+            <select name="seat_row" required>
+            <option value="">Choose a Row</option>
+            </select><br>
+        
+        <label>Choose a Seat:</label><br>
+            <select name="seat_column" required>
+            <option value="">Choose a Seat</option>
+            </select><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+    </div>
 
 {% endblock %}

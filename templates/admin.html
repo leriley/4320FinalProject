@@ -4,4 +4,37 @@
 
 {% block content %}
 
+<div>
+    <h1 class="title has-text-centered">Administrator Login</h1>
+    <hr class="custom-hr">
+</div>
+
+{% if logged_in %}
+    <div>
+        <strong><p>Printing Seating Chart...</p><br></strong>
+        <div class="custom-chart">
+<!--
+<strong>This is where the seating chart will be printed
+</strong>
+-->
+
+        </div>
+        <br>
+        <strong>Total Sales: "total sale here code" </total></strong>
+        
+        <h2 class="has-text-centered"><strong>Reservation List</strong></h2>
+    </div>
+
+{% endif %}
+
+<form method="post">
+    <label>Username</label><br>
+        <input type="text" name="username" required><br>
+    <label>Password</label><br>
+        <input type="password" name="password" required>
+    <br><br>
+    <button type="submit">Login</button>
+</form>
+
+
 {% endblock %}

@@ -4,4 +4,23 @@
 
 {% block content %}
 
+<div>
+    <h1 class="title has-text-centered">IT-4320 Trip Reservation System</h1>
+    <hr class="custom-hr">
+    <p class="subtitle">
+        Welcome to the IT-4320 reservation system. Use the select box to choose whether to make a reservation or log in as administrator.
+    </p>
+
+    <form method="POST" action="{{ url_for('dashboard_redirect') }}">
+        <label >Choose Menu Options:</label><br>
+        <select id="option" name="option">
+            <option value="">Choose an Option</option>
+            <option value="admin">Admin Login</option>
+            <option value="reserve">Reserve a Seat</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
 {% endblock %}
