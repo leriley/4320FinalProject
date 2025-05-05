@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <p><strong>Total Sales:</strong> ${{ total_sales }}</p>
+
+    <h3>Reservations</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Row</th>
+            <th>Column</th>
+            <th>Code</th>
+        </tr>
+        {% for r in reservations %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.first_name }} {{ r.last_name }}</td>
+            <td>{{ r.row }}</td>
+            <td>{{ r.column }}</td>
+            <td>{{ r.reservation_code }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('logout') }}">Logout</a> |
+    <a href="{{ url_for('index') }}">Return to Main Menu</a>
+</body>
+</html>
