@@ -33,10 +33,32 @@ def seating_chart():
         chart[res.seatRow - 1][res.seatColumn - 1] = 'X'
     return chart
 
-#Index page view/route
-#'app' on these routes will need to be updated when the database is set up so the blueprints can be incorperated
-#from @app.route to @[blueprint_name].bp.route
+def createTicketNumber(firstName):
+    firstName = list(firstName)
+    info = "INFOTC4320"
+    info = list(info)
+    a = len(firstName)
+    b = len(info)
+    ticketList = []
+    i = 0
+    if a > b:
+        runIndex = a 
+    else:
+        runIndex = b
+    while i <= runIndex:
+        try:
+            ticketList.append(firstName[i])
+        except:
+            pass
+        
+        try:
+            ticketList.append(info[i])
+        except:
+            pass
+        i += 1
+    return ticketList
 
+#Index page view/route
 @app.route('/dashboard_redirect', methods=['POST'])
 def dashboard_redirect():
     option = request.form.get('option')
