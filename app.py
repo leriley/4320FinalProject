@@ -21,7 +21,7 @@ class Reservation(db.Model):
     seatRow = db.Column(db.Integer, nullable=False)
     seatColumn = db.Column(db.Integer, nullable=False)
     eTicketNumber = db.Column(db.String, nullable=False)
-    created = db.Column(db.DateTime, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 # cost matrix
 def get_cost_matrix():
