@@ -1,8 +1,33 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import os
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/reservations.db'
+app.config['SECRET_KEY'] = 'your_secret_key'
+
+db = SQLAlchemy(app)
+
+class Admin(db.Model):
+    __tablename__ = 'admins'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+
+class Reservation(db.Model):
+    __tablename__ = 'reservations'
+    id = db.Column(db.Integer, primary_key=True)
+    passenger_name = db.Column(db.String, nullable=False)
+    seat_row = db.Column(db.Integer, nullable=False)
+    seat_column = db.Column(db.Integer, nullable=False)
+    created = db.Column(db.DateTime, nullable=False)
+    ticket_number = db.Column(db.String, nullable=False)
+
+# cost matrix
+def get_cost_matrix():
+    return [[100, 75, 50, 100] for _ in range(12)]
+
 #Index page view/route
 #'app' on these routes will need to be updated when the database is set up so the blueprints can be incorperated
 #from @app.route to @[blueprint_name].bp.route
