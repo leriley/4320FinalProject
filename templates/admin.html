@@ -13,10 +13,9 @@
     <div>
         <strong><p>Printing Seating Chart...</p><br></strong>
         <div class="custom-chart">
-<!--
-<strong>This is where the seating chart will be printed
+<strong>{% for row in show_seating_chart %}['{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}']
+{% endfor %}
 </strong>
--->
 
         </div>
         <br>

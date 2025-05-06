@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/reservations.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///reservations.db'
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
@@ -27,6 +27,12 @@ class Reservation(db.Model):
 def get_cost_matrix():
     return [[100, 75, 50, 100] for _ in range(12)]
 
+def seating_chart():
+    chart = [[ 0 for _ in range(4)] for _ in range(12)]
+    for res in Reservation.query.all():
+        chart[res.seatRow - 1][res.seatColumn - 1] = 'X'
+    return chart
+
 #Index page view/route
 #'app' on these routes will need to be updated when the database is set up so the blueprints can be incorperated
 #from @app.route to @[blueprint_name].bp.route
@@ -36,7 +42,6 @@ def dashboard_redirect():
     option = request.form.get('option')
     if not option:
         return redirect(url_for('index'))
-        
     if option == 'admin':
         return redirect(url_for('admin'))
     elif option == 'reserve':
@@ -50,12 +55,16 @@ def index():
 #Admin page view/route
 @app.route('/admin', methods=['GET'])
 def admin():
-    return render_template('admin.html')
+
+    show_seating_chart = seating_chart()
+    return render_template('admin.html', show_seating_chart=show_seating_chart)
 
 #Reservations page view/route
 @app.route('/reserve', methods=['GET'])
 def reserve():
-    return render_template('reserve.html')
+
+    show_seating_chart = seating_chart()
+    return render_template('reserve.html', show_seating_chart=show_seating_chart)
 
 
 if __name__ == '__main__':
