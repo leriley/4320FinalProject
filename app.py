@@ -11,18 +11,17 @@ db = SQLAlchemy(app)
 
 class Admin(db.Model):
     __tablename__ = 'admins'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True, primary_key=True)
     password = db.Column(db.String, nullable=False)
 
 class Reservation(db.Model):
     __tablename__ = 'reservations'
     id = db.Column(db.Integer, primary_key=True)
-    passenger_name = db.Column(db.String, nullable=False)
-    seat_row = db.Column(db.Integer, nullable=False)
-    seat_column = db.Column(db.Integer, nullable=False)
+    passengerName = db.Column(db.String, nullable=False)
+    seatRow = db.Column(db.Integer, nullable=False)
+    seatColumn = db.Column(db.Integer, nullable=False)
+    eTicketNumber = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, nullable=False)
-    ticket_number = db.Column(db.String, nullable=False)
 
 # cost matrix
 def get_cost_matrix():
