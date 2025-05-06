@@ -66,6 +66,5 @@ def reserve():
     show_seating_chart = seating_chart()
     return render_template('reserve.html', show_seating_chart=show_seating_chart)
 
-
 if __name__ == '__main__':
-    app.run(debug=True, port=5019)
+    app.run(debug=True, host="0.0.0.0")
