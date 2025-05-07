@@ -5,29 +5,53 @@
 {% block content %}
 
 <div>
-    <h1 class="title has-text-centered">Administrator Login</h1>
+    <h1 class="title has-text-centered">Administrator Dashboard</h1>
     <hr class="custom-hr">
 </div>
 
 {% if logged_in %}
-    <div>
-        <strong><p>Printing Seating Chart...</p><br></strong>
+    <div style="text-align: center">
+        <form method="post">
+            <input type="hidden" name="action" value="logout">
+            <button type="submit" class="button is-danger">Logout</button>
+        </form>
+    </div>
+<hr class="custom-hr">
+<div style="display: flex; gap: 40px; align-items: flex-start;">
+    <div style="display: inline-block">
+        <strong><p>Seating Chart</p><br></strong>
         <div class="custom-chart">
 <strong>{% for row in show_seating_chart %}['{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}']
 {% endfor %}
 </strong>
-
         </div>
         <br>
-        <strong>Total Sales: "total sale here code" </total></strong>
-        
-        <h2 class="has-text-centered"><strong>Reservation List</strong></h2>
+        <p><strong>Total Sales:</strong> ${{ total_sales }}</p>
     </div>
-
-    <form method="post">
-        <input type="hidden" name="action" value="logout">
-        <button type="submit">Logout</button>
-    </form>
+    <div style="display: inline-block">
+        <strong><p>Reservations</p><br></strong>
+        <table class="table is-striped is-bordered is-fullwidth">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Row</th>
+                <th>Column</th>
+                <th>eTicket Number</th>
+                <th>Created</th>
+            </tr>
+            {% for r in reservations %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.passengerName }}</td>
+                <td>{{ r.seatRow }}</td>
+                <td>{{ r.seatColumn }}</td>
+                <td>{{ r.eTicketNumber }}</td>
+                <td>{{ r.created }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endif %}
 
 {% if not logged_in %}

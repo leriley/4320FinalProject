@@ -95,7 +95,14 @@ def admin():
 
     show_seating_chart = seating_chart()
     logged_in = session.get('admin_logged_in', False)
-    return render_template('admin.html', show_seating_chart=show_seating_chart, logged_in=logged_in)
+    reservations = Reservation.query.all()
+    cost_matrix = get_cost_matrix()
+
+    total_sales = 0
+    for r in reservations:
+        total_sales += cost_matrix[r.seatRow][r.seatColumn]
+
+    return render_template('admin.html', show_seating_chart=show_seating_chart, logged_in=logged_in, reservations=reservations, total_sales=total_sales)
 
 #Reservations page view/route
 @app.route('/reserve', methods=['GET'])
