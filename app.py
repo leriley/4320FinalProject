@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash
+from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
@@ -75,11 +75,27 @@ def index():
     return render_template('index.html')
 
 #Admin page view/route
-@app.route('/admin', methods=['GET'])
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
+    if request.method == 'POST':
+        if request.form.get('action') == 'logout':
+            session.pop('admin_logged_in', None)
+            return redirect(url_for('admin'))
+
+        username = request.form['username']
+        password = request.form['password']
+
+        admin = Admin.query.filter_by(username=username).first()
+        if admin and admin.password == password:
+            session['admin_logged_in'] = True
+            return redirect(url_for('admin'))
+        else:
+            flash('Invalid username or password')
+            return redirect(url_for('admin'))
 
     show_seating_chart = seating_chart()
-    return render_template('admin.html', show_seating_chart=show_seating_chart)
+    logged_in = session.get('admin_logged_in', False)
+    return render_template('admin.html', show_seating_chart=show_seating_chart, logged_in=logged_in)
 
 #Reservations page view/route
 @app.route('/reserve', methods=['GET'])

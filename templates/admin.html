@@ -24,8 +24,13 @@
         <h2 class="has-text-centered"><strong>Reservation List</strong></h2>
     </div>
 
+    <form method="post">
+        <input type="hidden" name="action" value="logout">
+        <button type="submit">Logout</button>
+    </form>
 {% endif %}
 
+{% if not logged_in %}
 <form method="post">
     <label>Username</label><br>
         <input type="text" name="username" required><br>
@@ -34,6 +39,7 @@
     <br><br>
     <button type="submit">Login</button>
 </form>
+{% endif %}
 
 
 {% endblock %}
