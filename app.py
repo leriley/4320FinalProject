@@ -88,6 +88,7 @@ def admin():
             if reservation:
                 db.session.delete(reservation)
                 db.session.commit()
+                flash('Reservation deleted successfully.')
             else:
                 flash('Reservation not found.')
             return redirect(url_for('admin'))
@@ -139,6 +140,7 @@ def reserve():
         new_reservation = Reservation(passengerName=name, seatRow=seat_row, seatColumn=seat_column, eTicketNumber=ticket_number)
         db.session.add(new_reservation)
         db.session.commit()
+        flash(f'You have successfully reserved Row #{seat_row}, Seat #{seat_column}. Thank you!')
 
     show_seating_chart = seating_chart()
     return render_template('reserve.html', show_seating_chart=show_seating_chart)

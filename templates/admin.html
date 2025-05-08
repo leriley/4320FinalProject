@@ -49,7 +49,7 @@
                 <td>{{ r.seatRow }}</td>
                 <td>{{ r.seatColumn }}</td>
                 <td>{{ r.eTicketNumber }}</td>
-                <td>{{ r.created }}</td>
+                <td>{{ r.created.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td><form method="post" style="display:inline">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="ticket" value="{{ r.eTicketNumber }}">
