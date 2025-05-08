@@ -136,6 +136,11 @@ def reserve():
             return redirect(url_for('reserve'))
         
         ticket_number = createTicketNumber(name)
+
+        chart = seating_chart()
+        if chart[int(seat_row)][int(seat_column)] == 'X':
+            flash('This seat has already been booked.', 'error')
+            return redirect(url_for('reserve'))
         
         new_reservation = Reservation(passengerName=name, seatRow=seat_row, seatColumn=seat_column, eTicketNumber=ticket_number)
         db.session.add(new_reservation)
