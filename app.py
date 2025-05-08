@@ -30,7 +30,7 @@ def get_cost_matrix():
 def seating_chart():
     chart = [[ 0 for _ in range(4)] for _ in range(12)]
     for res in Reservation.query.all():
-        chart[res.seatRow - 1][res.seatColumn - 1] = 'X'
+        chart[res.seatRow][res.seatColumn] = 'X'
     return chart
 
 def createTicketNumber(firstName):
