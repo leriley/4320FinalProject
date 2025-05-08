@@ -56,7 +56,7 @@ def createTicketNumber(firstName):
         except:
             pass
         i += 1
-    return ticketList
+    return ''.join(ticketList)
 
 #Index page view/route
 @app.route('/dashboard_redirect', methods=['POST'])
@@ -80,6 +80,16 @@ def admin():
     if request.method == 'POST':
         if request.form.get('action') == 'logout':
             session.pop('admin_logged_in', None)
+            return redirect(url_for('admin'))
+        
+        if request.form.get('action') == 'delete':
+            ticket = request.form.get('ticket')
+            reservation = Reservation.query.filter_by(eTicketNumber=ticket).first()
+            if reservation:
+                db.session.delete(reservation)
+                db.session.commit()
+            else:
+                flash('Reservation not found.')
             return redirect(url_for('admin'))
 
         username = request.form['username']
@@ -105,8 +115,30 @@ def admin():
     return render_template('admin.html', show_seating_chart=show_seating_chart, logged_in=logged_in, reservations=reservations, total_sales=total_sales)
 
 #Reservations page view/route
-@app.route('/reserve', methods=['GET'])
+@app.route('/reserve', methods=['GET', 'POST'])
 def reserve():
+    if request.method == 'POST':
+        name = request.form['name']
+        seat_row = request.form['seat_row']
+        seat_column = request.form['seat_column']
+
+        if not name:
+            flash('Name is required.', 'error')
+            return redirect(url_for('reserve'))
+        
+        if not seat_row:
+            flash('Row is required.', 'error')
+            return redirect(url_for('reserve'))
+        
+        if not seat_column:
+            flash('Seat is required.', 'error')
+            return redirect(url_for('reserve'))
+        
+        ticket_number = createTicketNumber(name)
+        
+        new_reservation = Reservation(passengerName=name, seatRow=seat_row, seatColumn=seat_column, eTicketNumber=ticket_number)
+        db.session.add(new_reservation)
+        db.session.commit()
 
     show_seating_chart = seating_chart()
     return render_template('reserve.html', show_seating_chart=show_seating_chart)

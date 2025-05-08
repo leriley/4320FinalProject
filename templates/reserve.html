@@ -13,7 +13,8 @@
     {% endif %}
     
     <h3 class="subtitle has-text-centered"><strong>Seating Chart</strong></h3>
-    <p><strong>X = Reserved Seat : O = Available Seat</strong></p><br>
+    <p><strong>X = Reserved Seat</strong></p>
+    <p><strong>0 = Available Seat</strong></p><br>
     
     <div class="custom-chart">
 <strong>{% for row in show_seating_chart %}['{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}']
@@ -28,11 +29,17 @@
         <label>Choose a Row:</label><br>
             <select name="seat_row" required>
             <option value="">Choose a Row</option>
+            {% for row in range(0, 12) %}
+                <option value="{{ row }}">{{ row }}</option>
+            {% endfor %}
             </select><br>
         
         <label>Choose a Seat:</label><br>
             <select name="seat_column" required>
             <option value="">Choose a Seat</option>
+            {% for col in range(0, 4) %}
+                <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
             </select><br><br>
         
         <button type="submit">Submit</button>

@@ -20,6 +20,8 @@
 <div style="display: flex; gap: 40px; align-items: flex-start;">
     <div style="display: inline-block">
         <strong><p>Seating Chart</p><br></strong>
+        <p><strong>X = Reserved Seat</strong></p>
+        <p><strong>0 = Available Seat</strong></p><br>
         <div class="custom-chart">
 <strong>{% for row in show_seating_chart %}['{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}']
 {% endfor %}
@@ -38,6 +40,7 @@
                 <th>Column</th>
                 <th>eTicket Number</th>
                 <th>Created</th>
+                <th>Actions</th>
             </tr>
             {% for r in reservations %}
             <tr>
@@ -47,6 +50,11 @@
                 <td>{{ r.seatColumn }}</td>
                 <td>{{ r.eTicketNumber }}</td>
                 <td>{{ r.created }}</td>
+                <td><form method="post" style="display:inline">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="ticket" value="{{ r.eTicketNumber }}">
+                    <button type="submit" class="button is-danger" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</button>
+                </form></td>
             </tr>
             {% endfor %}
         </table>
